@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+         xmlns:leon="http://schemas.android.com/apk/res-auto"
+         xmlns:app="http://schemas.android.com/apk/res-auto"
+         xmlns:tools="http://schemas.android.com/tools"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout
+            android:id="@+id/register_appBar"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@color/cardview_light_background">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/register_collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#EEAD0E"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <android.support.v7.widget.Toolbar
+                    android:id="@+id/register_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="#EEAD0E"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:layout_collapseMode="pin"/>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/cardview_light_background"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:background="@color/cardview_light_background"
+                android:orientation="vertical">
+
+            <EditText
+                    android:id="@+id/register_username_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入用户名"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:maxLines="1"/>
+            <EditText
+                    android:id="@+id/register_password_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入密码"
+                    android:layout_marginBottom="20dp"
+                    android:inputType="textPassword"
+                    android:maxLines="1"/>
+            <EditText
+                    android:id="@+id/register_confirm_password_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请再次输入密码"
+                    android:layout_marginBottom="20dp"
+                    android:inputType="textPassword"
+                    android:maxLines="1"/>
+            <EditText
+                    android:id="@+id/register_name_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入您的姓名"
+                    android:layout_marginBottom="20dp"
+                    android:maxLines="1"/>
+            <EditText
+                    android:id="@+id/register_phone_number_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入您的手机号"
+                    android:layout_marginBottom="20dp"
+                    android:maxLines="1"/>
+            <EditText
+                    android:id="@+id/register_bus_number_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入您的常用车牌号"
+                    android:layout_marginBottom="20dp"
+                    android:maxLines="1"/>
+            <Button
+                    android:id="@+id/register_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="#FFD700"
+                    android:text="注册"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
+

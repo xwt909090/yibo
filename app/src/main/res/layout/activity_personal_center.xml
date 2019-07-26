@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:leon="http://schemas.android.com/apk/res-auto"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".MainActivity">
+
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/personal_center_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#EEAD0E"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_scrollFlags="scroll|enterAlways|snap"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#EEAD0E"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:src="@drawable/nav_icon"
+                app:civ_border_color="#FFFFFF"
+                app:civ_border_width="2dp"/>
+
+        <TextView
+                android:id="@+id/username_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="小飞象"
+                android:textColor="#FFF"
+                android:textSize="16sp"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#EEAD0E"
+                android:orientation="horizontal">
+
+            <Button
+                    android:id="@+id/petrol_station_button"
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_petrol_station"
+                    android:backgroundTint="#EEAD0E"
+                    android:layout_marginRight="-4dp"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginBottom="-7dp"
+                    android:layout_marginTop="-7dp"
+                    android:text="加油站"/>
+            <Button
+                    android:id="@+id/discount_coupon_button"
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_discount_coupon"
+                    android:backgroundTint="#EEAD0E"
+                    android:layout_marginRight="-4dp"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginBottom="-7dp"
+                    android:layout_marginTop="-7dp"
+                    android:text="折扣券"/>
+            <Button
+                    android:id="@+id/new_car_button"
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_new_car"
+                    android:backgroundTint="#EEAD0E"
+                    android:layout_marginRight="-4dp"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginBottom="-7dp"
+                    android:layout_marginTop="-7dp"
+                    android:text="买新车"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:fadingEdge="vertical">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            <com.leon.lib.settingview.LSettingItem
+                    android:id="@+id/my_information_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    leon:leftIcon="@drawable/lg"
+                    leon:leftText="我的信息" />
+
+            <com.leon.lib.settingview.LSettingItem
+                    android:id="@+id/my_parking_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    leon:leftIcon="@drawable/lg"
+                    leon:leftText="我的停车" />
+
+            <com.leon.lib.settingview.LSettingItem
+                    android:id="@+id/my_cars_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    leon:leftIcon="@drawable/lg"
+                    leon:leftText="我的车辆"/>
+
+            <com.leon.lib.settingview.LSettingItem
+                    android:id="@+id/yibo_shop_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    leon:leftIcon="@drawable/lg"
+                    leon:leftText="翼泊商店"/>
+
+            <com.leon.lib.settingview.LSettingItem
+                    android:id="@+id/security_center_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    leon:leftIcon="@drawable/lg"
+                    leon:leftText="安全中心" />
+
+            <com.leon.lib.settingview.LSettingItem
+                    android:id="@+id/usual_address_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    leon:leftIcon="@drawable/lg"
+                    leon:leftText="常用地址" />
+
+            <com.leon.lib.settingview.LSettingItem
+                    android:id="@+id/setting_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    leon:leftIcon="@drawable/lg"
+                    leon:leftText="设置" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

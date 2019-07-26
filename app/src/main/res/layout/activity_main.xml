@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/position_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+    <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            android:clickable="true"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+        <Button
+                android:id="@+id/start_parking_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginRight="0dp"
+                android:layout_marginLeft="-2dp"
+                android:layout_marginBottom="-4dp"
+                android:layout_marginTop="-6dp"
+                android:background="#FFD700"
+                android:text="开始停车"/>
+
+        <Button
+                android:id="@+id/personal_center_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginRight="-2dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginBottom="-4dp"
+                android:layout_marginTop="-6dp"
+                android:background="#FFFF00"
+                android:text="个人中心"/>
+
+    </LinearLayout>
+
+</LinearLayout>
