@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+         xmlns:leon="http://schemas.android.com/apk/res-auto"
+         xmlns:app="http://schemas.android.com/apk/res-auto"
+         xmlns:tools="http://schemas.android.com/tools"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="575dp"
+            android:background="@color/colorPrimary">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/indoor_my_parking_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:textSize="18sp"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_gravity="bottom"
+            android:background="#FFEC8B"
+            android:orientation="horizontal">
+
+        <Button
+                android:id="@+id/indoor_check_my_parking_status_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFD700"
+                android:text="查看我的停车状态"
+                android:layout_margin="5dp"
+                android:visibility="visible"/>
+
+        <EditText
+                android:id="@+id/indoor_parking_spot_num_edittext"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:hint="请输入实际停车位号"
+                android:layout_margin="5dp"
+                android:background="#FFFFFF"
+                android:visibility="gone"/>
+
+        <Button
+                android:id="@+id/indoor_parking_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="#FFD700"
+                android:layout_margin="5dp"
+                android:text="停车"
+                android:visibility="gone"/>
+
+    </LinearLayout>
+
+</FrameLayout>
+

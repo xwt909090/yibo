@@ -34,8 +34,8 @@
         </activity>
         <activity
                 android:name=".StartParkingActivity"
-                android:theme="@style/MyAppTheme"
-                android:label="附近的停车场">
+                android:label="附近的停车场"
+                android:theme="@style/MyAppTheme">
         </activity>
         <activity android:name=".Splash">
             <intent-filter>
@@ -70,6 +70,24 @@
         <activity
                 android:name=".MyCarsActivity"
                 android:theme="@style/MyAppTheme">
+        </activity>
+        <activity
+                android:name=".ParkingLotInformationActivity"
+                android:theme="@style/MyAppTheme">
+        </activity>
+        <activity
+                android:name=".IndoorNavigationActivity"
+                android:theme="@style/MyAppTheme">
+        </activity>
+        <activity
+                android:name=".ParkingDetailsActivity"
+                android:theme="@style/MyAppTheme">
+        </activity>
+        <activity
+                android:name=".PaymentInformationActivity"
+                android:theme="@style/MyAppTheme">
+        </activity>
+        <activity android:name=".OutdoorNavigationActivity">
         </activity>
     </application>
 
