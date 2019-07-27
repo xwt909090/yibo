@@ -6,6 +6,8 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,13 +15,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyCarsActivity extends AppCompatActivity {
 
     private TextView myDefaultCarsText;
 
-    private EditText myCarsEditText;
-
     private Button addCarsButton;
+
+    private List<Car> carsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +53,6 @@ public class MyCarsActivity extends AppCompatActivity {
         collapsingToolbar.setTitle("我的车辆");
         //点击事件
         myDefaultCarsText = (TextView)findViewById(R.id.my_default_cars_text);
-        myCarsEditText = (EditText)findViewById(R.id.my_cars_edittext);
         addCarsButton = (Button)findViewById(R.id.add_cars_button);
         StringBuilder sb = new StringBuilder();
         String defaultCar = "鲁K632145";
@@ -56,11 +60,13 @@ public class MyCarsActivity extends AppCompatActivity {
         sb.append(str);
         str = sb.toString();
         myDefaultCarsText.setText(str);
-        myCarsEditText.setKeyListener(null);
-        myCarsEditText.setCursorVisible(false);
-        myCarsEditText.setFocusable(false);
-        myCarsEditText.setFocusableInTouchMode(false);
-        myCarsEditText.setText("鲁K123456");
+
+        initCars();     //初始化车牌信息
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.my_cars_recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        CarAdapter adapter = new CarAdapter(carsList);
+        recyclerView.setAdapter(adapter);
     }
     //点击返回箭头时，关闭当前活动，返回上一个活动
     @Override
@@ -71,5 +77,12 @@ public class MyCarsActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initCars(){
+        for(int i = 0;i < 10;i++){
+            Car car1 = new Car("鲁K123456");
+            carsList.add(car1);
+        }
     }
 }

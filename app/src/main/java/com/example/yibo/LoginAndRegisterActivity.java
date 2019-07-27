@@ -11,7 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LoginAndRegisterActivity extends AppCompatActivity {
 
@@ -20,6 +22,10 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
     private TextView retrievePasswordText;
 
     private TextView freeRegistrationText;
+
+    private EditText usernameEdit;
+
+    private EditText passwordEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +56,26 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
         }
         collapsingToolbar.setTitle("登录");
         //点击事件
+        usernameEdit = (EditText)findViewById(R.id.login_username_edittext);
+        passwordEdit = (EditText)findViewById(R.id.login_password_edittext);
         loginButton = (Button)findViewById(R.id.login_button);
         retrievePasswordText = (TextView)findViewById(R.id.retrieve_password_text);
         freeRegistrationText = (TextView)findViewById(R.id.free_registration_text);
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                String username = usernameEdit.getText().toString();
+                String password = passwordEdit.getText().toString();
 
+                if(username.equals("admin") && password.equals("123456")){
+                    Toast.makeText(LoginAndRegisterActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginAndRegisterActivity.this, PersonalCenterActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else{
+                    Toast.makeText(LoginAndRegisterActivity.this, "username or password is invalid", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         retrievePasswordText.setOnClickListener(new View.OnClickListener(){

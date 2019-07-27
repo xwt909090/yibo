@@ -32,7 +32,10 @@
                 android:name=".PersonalCenterActivity"
                 android:theme="@style/MyAppTheme">
         </activity>
-        <activity android:name=".StartParkingActivity">
+        <activity
+                android:name=".StartParkingActivity"
+                android:theme="@style/MyAppTheme"
+                android:label="附近的停车场">
         </activity>
         <activity android:name=".Splash">
             <intent-filter>

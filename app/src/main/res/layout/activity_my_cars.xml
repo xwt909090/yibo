@@ -46,13 +46,10 @@
                     android:layout_margin="10dp"
                     android:textSize="18sp"/>
 
-            <EditText
-                    android:id="@+id/my_cars_edittext"
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/my_cars_recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:textSize="18sp"
-                    android:textIsSelectable="true"/>
+                    android:layout_height="match_parent"/>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
