@@ -10,12 +10,29 @@
             android:layout_height="wrap_content"
             android:visibility="gone"/>
 
-    <com.baidu.mapapi.map.MapView
-            android:id="@+id/bmapView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="9"
-            android:clickable="true"/>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="9">
+
+        <com.baidu.mapapi.map.MapView
+                android:id="@+id/bmapView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"/>
+
+        <Button
+                android:id="@+id/real_time_position_request_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="30dp"
+                android:shadowRadius="5"
+                android:background="@drawable/ic_real_time_position"/>
+
+    </RelativeLayout>
 
     <LinearLayout
             android:layout_width="match_parent"
