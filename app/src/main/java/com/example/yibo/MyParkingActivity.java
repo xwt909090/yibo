@@ -1,6 +1,7 @@
 package com.example.yibo;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -103,6 +104,13 @@ public class MyParkingActivity extends AppCompatActivity {
                     }
                 });
                 dialog.show();
+            }
+        });
+        viewHistoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyParkingActivity.this, ReservationHistoryActivity.class);
+                startActivity(intent);
             }
         });
     }

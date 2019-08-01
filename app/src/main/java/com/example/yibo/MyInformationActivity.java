@@ -76,6 +76,13 @@ public class MyInformationActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        bankCardInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyInformationActivity.this, BankCardInfoActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     //点击返回箭头时，关闭当前活动，返回上一个活动
     @Override

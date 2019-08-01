@@ -109,6 +109,14 @@
                 android:name=".RetrievePasswordActivity"
                 android:theme="@style/MyAppTheme">
         </activity>
+        <activity
+                android:name=".BankCardInfoActivity"
+                android:theme="@style/MyAppTheme">
+        </activity>
+        <activity
+                android:name=".ReservationHistoryActivity"
+                android:theme="@style/MyAppTheme">
+        </activity>
     </application>
 
 </manifest>
