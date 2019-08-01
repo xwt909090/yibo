@@ -1,5 +1,6 @@
 package com.example.yibo;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -33,6 +34,7 @@ public class MyInformationActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
         setContentView(R.layout.activity_my_information);
         //引入自定义ToolBar
         Toolbar toolbar = (Toolbar)findViewById(R.id.my_information_toolbar);
@@ -67,6 +69,13 @@ public class MyInformationActivity extends AppCompatActivity {
         sb.append(str);
         str = sb.toString();
         myInfoText.setText(str);
+        changePwdButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyInformationActivity.this, RetrievePasswordActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     //点击返回箭头时，关闭当前活动，返回上一个活动
     @Override
@@ -77,5 +86,10 @@ public class MyInformationActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

@@ -1,9 +1,11 @@
 package com.example.yibo;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MyParkingActivity extends AppCompatActivity {
 
@@ -33,6 +36,7 @@ public class MyParkingActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
         setContentView(R.layout.activity_my_parking);
         //引入自定义ToolBar
         Toolbar toolbar = (Toolbar)findViewById(R.id.my_parking_toolbar);
@@ -79,6 +83,28 @@ public class MyParkingActivity extends AppCompatActivity {
         sb.append(str);
         str = sb.toString();
         myParkingText.setText(str);
+        cancelMyReservationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MyParkingActivity.this);
+                dialog.setTitle("提示");
+                dialog.setMessage("您是否确定取消预约？");
+                dialog.setCancelable(false);
+                dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which){
+                        Toast.makeText(MyParkingActivity.this, "你点了确定", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MyParkingActivity.this, "你点了取消", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.show();
+            }
+        });
     }
     //点击返回箭头时，关闭当前活动，返回上一个活动
     @Override
@@ -89,5 +115,10 @@ public class MyParkingActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

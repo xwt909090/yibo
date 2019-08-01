@@ -1,5 +1,7 @@
 package com.example.yibo;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,7 @@ public class MyCarsActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
         setContentView(R.layout.activity_my_cars);
         //引入自定义ToolBar
         Toolbar toolbar = (Toolbar)findViewById(R.id.my_cars_toolbar);
@@ -60,6 +64,31 @@ public class MyCarsActivity extends AppCompatActivity {
         sb.append(str);
         str = sb.toString();
         myDefaultCarsText.setText(str);
+        addCarsButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                AlertDialog.Builder builder = new AlertDialog.Builder(MyCarsActivity.this);
+                builder.setTitle("请输入要添加的车牌号");
+                final EditText addCarNumEdit = new EditText(MyCarsActivity.this);
+                builder.setView(addCarNumEdit);
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MyCarsActivity.this, "你输入的是: " + addCarNumEdit.getText().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MyCarsActivity.this, "你点了取消", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setCancelable(true);    //设置按钮是否可以按返回键取消,false则不可以取消
+                AlertDialog dialog = builder.create();  //创建对话框
+                dialog.setCanceledOnTouchOutside(true); //设置弹出框失去焦点是否隐藏,即点击屏蔽其它地方是否隐藏
+                dialog.show();
+            }
+        });
 
         initCars();     //初始化车牌信息
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.my_cars_recycler_view);
@@ -84,5 +113,10 @@ public class MyCarsActivity extends AppCompatActivity {
             Car car1 = new Car("鲁K123456");
             carsList.add(car1);
         }
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

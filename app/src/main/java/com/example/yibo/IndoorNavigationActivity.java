@@ -30,6 +30,7 @@ public class IndoorNavigationActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
         setContentView(R.layout.activity_indoor_navigation);
 
         //
@@ -43,5 +44,10 @@ public class IndoorNavigationActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

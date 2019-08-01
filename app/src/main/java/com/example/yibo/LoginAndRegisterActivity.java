@@ -42,6 +42,7 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
         }
         //setHasOptionsMenu(true);//加上这句话，menu才会显示出来
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
         setContentView(R.layout.activity_login_and_register);
         //引入自定义ToolBar
         Toolbar toolbar = (Toolbar)findViewById(R.id.login_and_register_toolbar);
@@ -69,8 +70,8 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
 
                 if(username.equals("admin") && password.equals("123456")){
                     Toast.makeText(LoginAndRegisterActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginAndRegisterActivity.this, PersonalCenterActivity.class);
-                    startActivity(intent);
+                    //Intent intent = new Intent(LoginAndRegisterActivity.this, PersonalCenterActivity.class);
+                    //startActivity(intent);
                     finish();
                 }
                 else{
@@ -102,5 +103,10 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

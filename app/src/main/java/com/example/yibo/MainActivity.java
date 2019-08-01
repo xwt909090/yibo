@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private double LOC_LON = 0.0;
 
-    private static final String TAG = "TIBO";
+    private static final String TAG = "YIBO";
 
     /**
      * 定位SDK的核心类

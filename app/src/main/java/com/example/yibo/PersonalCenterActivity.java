@@ -36,6 +36,7 @@ public class PersonalCenterActivity extends AppCompatActivity {
         //setHasOptionsMenu(true);//加上这句话，menu才会显示出来
 
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
         setContentView(R.layout.activity_personal_center);
         //引入自定义ToolBar
         Toolbar toolbar = (Toolbar)findViewById(R.id.personal_center_toolbar);
@@ -131,6 +132,11 @@ public class PersonalCenterActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 
 }

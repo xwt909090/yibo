@@ -36,6 +36,8 @@ public class ParkingDetailsActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
+
         setContentView(R.layout.activity_parking_details);
         //引入自定义ToolBar
         Toolbar toolbar = (Toolbar)findViewById(R.id.parking_details_toolbar);
@@ -96,5 +98,10 @@ public class ParkingDetailsActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

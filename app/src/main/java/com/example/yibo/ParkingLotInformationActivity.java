@@ -1,9 +1,11 @@
 package com.example.yibo;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import org.w3c.dom.Text;
 
 public class ParkingLotInformationActivity extends AppCompatActivity {
@@ -32,6 +35,8 @@ public class ParkingLotInformationActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.rgb(238,173,14));
         }
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
+
         setContentView(R.layout.activity_parking_lot_information);
         //引入自定义ToolBar
         Toolbar toolbar = (Toolbar)findViewById(R.id.parking_lot_information_toolbar);
@@ -58,6 +63,28 @@ public class ParkingLotInformationActivity extends AppCompatActivity {
         parkingLotSize.setText("车位总数：" + size);
         parkingLotRemainSize.setText("剩余车位数：" + remainSize);
         parkingLotImage.setImageResource(R.drawable.lg);
+        reservationButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                AlertDialog.Builder dialog = new AlertDialog.Builder(ParkingLotInformationActivity.this);
+                dialog.setTitle("提示");
+                dialog.setMessage("您是否确定预约该停车场？");
+                dialog.setCancelable(false);
+                dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which){
+                        Toast.makeText(ParkingLotInformationActivity.this, "你点了确定", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(ParkingLotInformationActivity.this, "你点了取消", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.show();
+            }
+        });
         indoorButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -82,5 +109,10 @@ public class ParkingLotInformationActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

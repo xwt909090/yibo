@@ -32,6 +32,7 @@ public class StartParkingActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.rgb(238,173,14));
         }
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
         setContentView(R.layout.activity_start_parking);
         //引入自定义ToolBar
         Toolbar toolbar = (Toolbar)findViewById(R.id.start_parking_toolbar);
@@ -85,5 +86,11 @@ public class StartParkingActivity extends AppCompatActivity {
             parkingLotList.add(pl6);
 
         }
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

@@ -26,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
         setContentView(R.layout.activity_register);
         //引入自定义ToolBar
         Toolbar toolbar = (Toolbar)findViewById(R.id.register_toolbar);
@@ -50,5 +51,10 @@ public class RegisterActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

@@ -35,6 +35,7 @@ public class PaymentInformationActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
         setContentView(R.layout.activity_payment_information);
         //引入自定义ToolBar
         Toolbar toolbar = (Toolbar)findViewById(R.id.payment_info_toolbar);
@@ -69,6 +70,7 @@ public class PaymentInformationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(PaymentInformationActivity.this, "支付成功！", Toast.LENGTH_SHORT).show();
+                ActivityCollector.finishAll();
             }
         });
     }
@@ -81,5 +83,10 @@ public class PaymentInformationActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }
