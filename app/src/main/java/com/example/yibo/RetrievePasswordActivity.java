@@ -11,11 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+import org.w3c.dom.Text;
 
 public class RetrievePasswordActivity extends AppCompatActivity {
 
     private EditText originEdit, firstNewEdit, secondNewEdit;
+    private TextView firstConditionText, secondConditionText, originConditionText;
     private Button confirmButton;
 
     @Override
@@ -48,14 +51,105 @@ public class RetrievePasswordActivity extends AppCompatActivity {
         originEdit = (EditText)findViewById(R.id.retrieve_password_origin_edittext);
         firstNewEdit = (EditText)findViewById(R.id.retrieve_password_first_new_edittext);
         secondNewEdit = (EditText)findViewById(R.id.retrieve_password_second_new_edittext);
+        firstConditionText = (TextView)findViewById(R.id.retrieve_password_first_new_condition_text);
+        secondConditionText = (TextView)findViewById(R.id.retrieve_password_second_new_condition_text);
+        originConditionText = (TextView)findViewById(R.id.register_password_origin_condition_text);
         confirmButton = (Button)findViewById(R.id.retrieve_password_confirm_button);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(RetrievePasswordActivity.this, "confirm", Toast.LENGTH_SHORT).show();
+                if(originConditionText.getVisibility() == View.GONE &&
+                        firstConditionText.getVisibility() == View.GONE &&
+                            secondConditionText.getVisibility() == View.GONE) {
+                    Toast.makeText(RetrievePasswordActivity.this, "successful", Toast.LENGTH_SHORT).show();
+                    ActivityCollector.finishAll();
+                }
+                else{
+                    Toast.makeText(RetrievePasswordActivity.this, "failed", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+        originEdit.setOnFocusChangeListener(new MyOnFocusChangeListener());
+        firstNewEdit.setOnFocusChangeListener(new MyOnFocusChangeListener());
+        secondNewEdit.setOnFocusChangeListener(new MyOnFocusChangeListener());
     }
+    private class MyOnFocusChangeListener implements View.OnFocusChangeListener {
+        String origin = originEdit.getText().toString().trim(), first = firstNewEdit.getText().toString().trim(), second = secondNewEdit.getText().toString().trim();
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            int i = v.getId();
+            switch (i) {
+                case R.id.retrieve_password_origin_edittext:
+                    origin = originEdit.getText().toString().trim();
+                    if (hasFocus) {
+                        // 此处为得到焦点时的处理内容
+                        if ("".equals(origin)) {
+                            originConditionText.setText("请输入原密码");
+                            originConditionText.setVisibility(View.VISIBLE);
+                        } else {
+                            originConditionText.setVisibility(View.GONE);
+                        }
+                    } else {
+                        // 此处为失去焦点时的处理内容
+                        if ("".equals(origin)) {
+                            originConditionText.setText("请输入原密码");
+                            originConditionText.setVisibility(View.VISIBLE);
+                        } else {
+                            originConditionText.setVisibility(View.GONE);
+                        }
+                    }
+                    break;
+                case R.id.retrieve_password_first_new_edittext:
+                    first = firstNewEdit.getText().toString().trim();
+                    if (hasFocus) {
+                        // 此处为得到焦点时的处理内容
+                        if ("".equals(first) || first.length() < 6) {
+                            firstConditionText.setText("新密码应不少于6位字符");
+                            firstConditionText.setVisibility(View.VISIBLE);
+                        } else {
+                            firstConditionText.setVisibility(View.GONE);
+                        }
+                    }
+                    else{
+                        // 此处为失去焦点时的处理内容
+                        if("".equals(first) || first.length() < 6){
+                            firstConditionText.setText("您设置的密码有误，请重新设置您的密码");
+                            firstConditionText.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            firstConditionText.setVisibility(View.GONE);
+                        }
+                    }
+                    break;
+                case R.id.retrieve_password_second_new_edittext:
+                    second = secondNewEdit.getText().toString().trim();
+                    first = firstNewEdit.getText().toString().trim();
+                    if(hasFocus){
+                        // 此处为得到焦点时的处理内容
+                        if(!first.equals(second)) {
+                            secondConditionText.setText("请再次输入新密码");
+                            secondConditionText.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            secondConditionText.setVisibility(View.GONE);
+                        }
+                    }
+                    else{
+                        // 此处为失去焦点时的处理内容
+                        if(!first.equals(second)){
+                            secondConditionText.setText("两次密码输入的不一致，请重新输入");
+                            secondConditionText.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            secondConditionText.setVisibility(View.GONE);
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+
     //点击返回箭头时，关闭当前活动，返回上一个活动
     @Override
     public boolean onOptionsItemSelected(MenuItem item){

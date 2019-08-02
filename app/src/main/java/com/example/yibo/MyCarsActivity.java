@@ -27,6 +27,8 @@ public class MyCarsActivity extends AppCompatActivity {
 
     private Button addCarsButton;
 
+    String defaultCar = "鲁K632145";
+
     private List<Car> carsList = new ArrayList<>();
 
     @Override
@@ -58,11 +60,7 @@ public class MyCarsActivity extends AppCompatActivity {
         //点击事件
         myDefaultCarsText = (TextView)findViewById(R.id.my_default_cars_text);
         addCarsButton = (Button)findViewById(R.id.add_cars_button);
-        StringBuilder sb = new StringBuilder();
-        String defaultCar = "鲁K632145";
         String str = "您当前的默认车辆为：" + defaultCar + "";
-        sb.append(str);
-        str = sb.toString();
         myDefaultCarsText.setText(str);
         addCarsButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -74,13 +72,19 @@ public class MyCarsActivity extends AppCompatActivity {
                 builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(MyCarsActivity.this, "你输入的是: " + addCarNumEdit.getText().toString(), Toast.LENGTH_SHORT).show();
+                        String cn = addCarNumEdit.getText().toString().trim();
+                        if("".equals(cn)){
+                            Toast.makeText(MyCarsActivity.this, "添加失败，请输入有效的车牌号", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            carsList.add(new Car(cn));
+                        }
                     }
                 });
                 builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(MyCarsActivity.this, "你点了取消", Toast.LENGTH_SHORT).show();
+
                     }
                 });
                 builder.setCancelable(true);    //设置按钮是否可以按返回键取消,false则不可以取消
@@ -94,8 +98,44 @@ public class MyCarsActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.my_cars_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        CarAdapter adapter = new CarAdapter(carsList);
+        final CarAdapter adapter = new CarAdapter(carsList);
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new CarAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                final int position1 = position;
+                //弹出选项对话框
+                CarNumDialog dialog = new CarNumDialog(MyCarsActivity.this);
+                dialog.setTitle("选项");
+                dialog.setDefault("设为默认", new CarNumDialog.OnDefaultListtener() {
+                    @Override
+                    public void onDefault(CarNumDialog mdialog) {
+                        Car c1 = carsList.get(position1);
+                        defaultCar = c1.getCarNumber();
+                        String str = "您当前的默认车辆为：" + defaultCar + "";
+                        myDefaultCarsText.setText(str);
+                        Toast.makeText(MyCarsActivity.this, "默认车辆设置成功！", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.setDelete("删除", new CarNumDialog.OnDeleteListtener() {
+                    @Override
+                    public void onDelete(CarNumDialog mdialog) {
+                        Car c2 = carsList.get(position1);
+                        if(c2.getCarNumber().equals(defaultCar)){
+                            Toast.makeText(MyCarsActivity.this, "默认车辆不能删除！", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            adapter.remove(position1);
+                        }
+                    }
+                });
+                dialog.show();
+            }
+            @Override
+            public void onItemLongClick(int position) {
+                //adapter.remove(position);
+            }
+        });
     }
     //点击返回箭头时，关闭当前活动，返回上一个活动
     @Override
@@ -109,9 +149,19 @@ public class MyCarsActivity extends AppCompatActivity {
     }
 
     private void initCars(){
-        for(int i = 0;i < 10;i++){
-            Car car1 = new Car("鲁K123456");
+        for(int i = 0;i < 1;i++){
+            Car car1 = new Car("鲁K1");
             carsList.add(car1);
+            Car car2 = new Car("鲁K12");
+            carsList.add(car2);
+            Car car3 = new Car("鲁K123");
+            carsList.add(car3);
+            Car car4 = new Car("鲁K1234");
+            carsList.add(car4);
+            Car car5 = new Car("鲁K12345");
+            carsList.add(car5);
+            Car car6 = new Car("鲁K123456");
+            carsList.add(car6);
         }
     }
     @Override

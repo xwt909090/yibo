@@ -69,13 +69,13 @@ public class LoginAndRegisterActivity extends AppCompatActivity {
                 String password = passwordEdit.getText().toString();
 
                 if(username.equals("admin") && password.equals("123456")){
-                    Toast.makeText(LoginAndRegisterActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginAndRegisterActivity.this, "登录成功！", Toast.LENGTH_SHORT).show();
                     //Intent intent = new Intent(LoginAndRegisterActivity.this, PersonalCenterActivity.class);
                     //startActivity(intent);
                     finish();
                 }
                 else{
-                    Toast.makeText(LoginAndRegisterActivity.this, "username or password is invalid", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginAndRegisterActivity.this, "用户名或密码错误！", Toast.LENGTH_SHORT).show();
                 }
             }
         });

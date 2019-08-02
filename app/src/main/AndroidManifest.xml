@@ -117,6 +117,10 @@
                 android:name=".ReservationHistoryActivity"
                 android:theme="@style/MyAppTheme">
         </activity>
+        <activity
+                android:name=".SettingActivity"
+                android:theme="@style/MyAppTheme">
+        </activity>
     </application>
 
 </manifest>

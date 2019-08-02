@@ -45,51 +45,150 @@
                 android:background="@color/cardview_light_background"
                 android:orientation="vertical">
 
-            <EditText
-                    android:id="@+id/register_username_edittext"
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="请输入用户名"
-                    android:layout_marginTop="30dp"
                     android:layout_marginBottom="20dp"
-                    android:maxLines="1"/>
-            <EditText
-                    android:id="@+id/register_password_edittext"
+                    android:orientation="vertical">
+                <EditText
+                        android:id="@+id/register_username_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="请输入用户名"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="0dp"
+                        android:maxLines="1"/>
+                <TextView
+                        android:id="@+id/register_username_condition_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:textColor="#FF0000"
+                        android:layout_marginLeft="5dp"
+                        android:text="用户名由字母、数字或“_”组成，长度不少于2位，不多于20位"
+                        android:layout_marginBottom="0dp"/>
+            </LinearLayout>
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="请输入密码"
                     android:layout_marginBottom="20dp"
-                    android:inputType="textPassword"
-                    android:maxLines="1"/>
-            <EditText
-                    android:id="@+id/register_confirm_password_edittext"
+                    android:orientation="vertical">
+                <EditText
+                        android:id="@+id/register_password_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="请输入密码"
+                        android:layout_marginBottom="0dp"
+                        android:inputType="textPassword"
+                        android:maxLines="1"/>
+                <TextView
+                        android:id="@+id/register_password_condition_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:textColor="#FF0000"
+                        android:layout_marginLeft="5dp"
+                        android:text="密码不少于6位字符"
+                        android:layout_marginBottom="0dp"/>
+            </LinearLayout>
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="请再次输入密码"
                     android:layout_marginBottom="20dp"
-                    android:inputType="textPassword"
-                    android:maxLines="1"/>
-            <EditText
-                    android:id="@+id/register_name_edittext"
+                    android:orientation="vertical">
+                <EditText
+                        android:id="@+id/register_confirm_password_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="请再次输入密码"
+                        android:layout_marginBottom="0dp"
+                        android:inputType="textPassword"
+                        android:maxLines="1"/>
+                <TextView
+                        android:id="@+id/register_confirm_condition_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:textColor="#FF0000"
+                        android:layout_marginLeft="5dp"
+                        android:text="请再次输入密码"
+                        android:layout_marginBottom="0dp"/>
+            </LinearLayout>
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="请输入您的姓名"
                     android:layout_marginBottom="20dp"
-                    android:maxLines="1"/>
-            <EditText
-                    android:id="@+id/register_phone_number_edittext"
+                    android:orientation="vertical">
+                <EditText
+                        android:id="@+id/register_name_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="请输入您的真实姓名"
+                        android:layout_marginBottom="0dp"
+                        android:maxLines="1"/>
+                <TextView
+                        android:id="@+id/register_name_condition_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:textColor="#FF0000"
+                        android:layout_marginLeft="5dp"
+                        android:text=""
+                        android:layout_marginBottom="0dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="请输入您的手机号"
                     android:layout_marginBottom="20dp"
-                    android:maxLines="1"/>
-            <EditText
-                    android:id="@+id/register_bus_number_edittext"
+                    android:orientation="vertical">
+
+                <EditText
+                        android:id="@+id/register_phone_number_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="请输入您的手机号"
+                        android:layout_marginBottom="0dp"
+                        android:maxLines="1"/>
+                <TextView
+                        android:id="@+id/register_phone_number_condition_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:textColor="#FF0000"
+                        android:layout_marginLeft="5dp"
+                        android:text=""
+                        android:layout_marginBottom="0dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="请输入您的常用车牌号"
                     android:layout_marginBottom="20dp"
-                    android:maxLines="1"/>
+                    android:orientation="vertical">
+                <EditText
+                        android:id="@+id/register_bus_number_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="请输入您的常用车牌号"
+                        android:layout_marginBottom="0dp"
+                        android:maxLines="1"/>
+                <TextView
+                        android:id="@+id/register_bus_number_condition_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:textColor="#FF0000"
+                        android:layout_marginLeft="5dp"
+                        android:text="车牌号格式为：鲁K12345，其中字母应为大写"
+                        android:layout_marginBottom="0dp"/>
+            </LinearLayout>
+
             <Button
                     android:id="@+id/register_button"
                     android:layout_width="match_parent"

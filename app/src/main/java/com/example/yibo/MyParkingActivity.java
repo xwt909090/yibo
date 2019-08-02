@@ -94,13 +94,14 @@ public class MyParkingActivity extends AppCompatActivity {
                 dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int which){
-                        Toast.makeText(MyParkingActivity.this, "你点了确定", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyParkingActivity.this, "您还未预约，无法取消预约！", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MyParkingActivity.this, "您正在停车，无法取消预约！", Toast.LENGTH_SHORT).show();
                     }
                 });
                 dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(MyParkingActivity.this, "你点了取消", Toast.LENGTH_SHORT).show();
+
                     }
                 });
                 dialog.show();

@@ -2,6 +2,7 @@ package com.example.yibo;
 
 import android.content.Intent;
 import android.media.Image;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,10 +51,14 @@ public class ParkingLotAdapter extends RecyclerView.Adapter<ParkingLotAdapter.Vi
             public void onClick(View v){
                 int position = holder.getAdapterPosition();
                 ParkingLot parkinglot = mParkingLotList.get(position);
+                //传递对象
                 Intent intent = new Intent(v.getContext(), ParkingLotInformationActivity.class);
-                
+                // 新建Bundle对象
+                Bundle mBundle = new Bundle();
+                // 放入对象
+                mBundle.putSerializable("parkingLot", parkinglot);
+                intent.putExtras(mBundle);
                 v.getContext().startActivity(intent);
-                Toast.makeText(v.getContext(), "you clicked view " + parkinglot.getParkingLotName(), Toast.LENGTH_SHORT).show();
             }
         });
         return holder;

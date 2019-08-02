@@ -48,19 +48,62 @@ public class BankCardAdapter extends RecyclerView.Adapter<BankCardAdapter.ViewHo
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 BankCard bc = mBankCardList.get(position);
-                Toast.makeText(v.getContext(), "you clicked view " + bc.getName(), Toast.LENGTH_SHORT).show();
+
             }
         });
         return holder;
     }
+
+    public void addData(int position) {
+        mBankCardList.add(position,new BankCard("xxx", "xxx", "xxx", R.drawable.ic_bank_jianshe, R.drawable.bank_jianshe_background));
+        notifyItemInserted(position);
+    }
+
+    public void remove(int i) {
+        mBankCardList.remove(i);
+        notifyItemRemoved(i);
+        notifyDataSetChanged();
+
+    }
+
+    public interface OnItemClickListener{  //自定义接口回调设置点击事件
+        void onItemClick(int position);
+        void onItemLongClick(int position);
+    }
+
+    private OnItemClickListener mOnItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        mOnItemClickListener=onItemClickListener;
+    }
+
+
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position){
+    public void onBindViewHolder(final ViewHolder holder, final int position){
         BankCard bankCard = mBankCardList.get(position);
         holder.bcImage.setImageResource(bankCard.getImageId());
         holder.bcName.setText(bankCard.getName());
         holder.bcType.setText(bankCard.getType());
         holder.bcNum.setText(bankCard.getNumber());
         holder.bcLayout.setBackgroundResource(bankCard.getBackgroundId());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int ps = holder.getLayoutPosition();
+                mOnItemClickListener.onItemClick(ps);
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                int ps=holder.getLayoutPosition();
+                mOnItemClickListener.onItemLongClick(ps);
+                return false;
+            }
+        });
     }
     @Override
     public int getItemCount(){

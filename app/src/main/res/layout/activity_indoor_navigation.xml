@@ -50,7 +50,7 @@
                 android:hint="请输入实际停车位号"
                 android:layout_margin="5dp"
                 android:background="#FFFFFF"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
         <Button
                 android:id="@+id/indoor_parking_button"
@@ -60,7 +60,7 @@
                 android:background="#FFD700"
                 android:layout_margin="5dp"
                 android:text="停车"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
     </LinearLayout>
 

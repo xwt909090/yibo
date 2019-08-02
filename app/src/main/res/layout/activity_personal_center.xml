@@ -101,49 +101,49 @@
                     android:id="@+id/my_information_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    leon:leftIcon="@drawable/lg"
+                    leon:leftIcon="@drawable/personal_info"
                     leon:leftText="我的信息" />
 
             <com.leon.lib.settingview.LSettingItem
                     android:id="@+id/my_parking_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    leon:leftIcon="@drawable/lg"
+                    leon:leftIcon="@drawable/my_parking"
                     leon:leftText="我的停车" />
 
             <com.leon.lib.settingview.LSettingItem
                     android:id="@+id/my_cars_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    leon:leftIcon="@drawable/lg"
+                    leon:leftIcon="@drawable/my_cars"
                     leon:leftText="我的车辆"/>
 
             <com.leon.lib.settingview.LSettingItem
                     android:id="@+id/yibo_shop_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    leon:leftIcon="@drawable/lg"
+                    leon:leftIcon="@drawable/yibo_shop"
                     leon:leftText="翼泊商店"/>
 
             <com.leon.lib.settingview.LSettingItem
                     android:id="@+id/security_center_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    leon:leftIcon="@drawable/lg"
+                    leon:leftIcon="@drawable/security_center"
                     leon:leftText="安全中心" />
 
             <com.leon.lib.settingview.LSettingItem
                     android:id="@+id/usual_address_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    leon:leftIcon="@drawable/lg"
+                    leon:leftIcon="@drawable/usual_address"
                     leon:leftText="常用地址" />
 
             <com.leon.lib.settingview.LSettingItem
                     android:id="@+id/setting_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    leon:leftIcon="@drawable/lg"
+                    leon:leftIcon="@drawable/setting"
                     leon:leftText="设置" />
 
         </LinearLayout>

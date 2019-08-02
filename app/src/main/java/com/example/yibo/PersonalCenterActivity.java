@@ -117,7 +117,8 @@ public class PersonalCenterActivity extends AppCompatActivity {
         setting.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
             @Override
             public void click() {
-
+                Intent intent = new Intent(PersonalCenterActivity.this, SettingActivity.class);
+                startActivity(intent);
             }
         });
 

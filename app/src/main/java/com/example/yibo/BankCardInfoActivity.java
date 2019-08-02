@@ -47,7 +47,7 @@ public class BankCardInfoActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.bank_card_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        BankCardAdapter adapter = new BankCardAdapter(bankCardList);
+        final BankCardAdapter adapter = new BankCardAdapter(bankCardList);
         recyclerView.setAdapter(adapter);
 
         //
@@ -58,6 +58,34 @@ public class BankCardInfoActivity extends AppCompatActivity {
                 Toast.makeText(BankCardInfoActivity.this, "add", Toast.LENGTH_SHORT).show();
             }
         });
+        adapter.setOnItemClickListener(new BankCardAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                final int position1 = position;
+                //弹出选项对话框
+                CarNumDialog dialog = new CarNumDialog(BankCardInfoActivity.this);
+                dialog.setTitle("选项");
+                dialog.setDefault("设为默认", new CarNumDialog.OnDefaultListtener() {
+                    @Override
+                    public void onDefault(CarNumDialog mdialog) {
+                        BankCard bc1 = bankCardList.get(position1);
+                        Toast.makeText(BankCardInfoActivity.this, "default: " + bc1.getName(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.setDelete("删除", new CarNumDialog.OnDeleteListtener() {
+                    @Override
+                    public void onDelete(CarNumDialog mdialog) {
+                        adapter.remove(position1);
+                    }
+                });
+                dialog.show();
+            }
+            @Override
+            public void onItemLongClick(int position) {
+                //adapter.remove(position);
+            }
+        });
+
     }
     //点击返回箭头时，关闭当前活动，返回上一个活动
     @Override

@@ -8,15 +8,14 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button personal_center_button;
 
-    private Button requestButton;
+    private FloatingActionButton requestFButton;
 
     private boolean isRequest = false;//是否手动触发请求定位
     private boolean isFirstLocate = true;       //是否首次定位//防止多次调用animateMapStatus()方法，第一次定位时调用即可
@@ -132,8 +131,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //点击按钮手动请求定位
-        requestButton = (Button)findViewById(R.id.real_time_position_request_button);
-        requestButton.setOnClickListener(new View.OnClickListener() {
+        requestFButton = (FloatingActionButton) findViewById(R.id.real_time_position_request_fbutton);
+        requestFButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

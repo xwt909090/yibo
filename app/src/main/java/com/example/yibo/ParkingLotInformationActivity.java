@@ -56,9 +56,16 @@ public class ParkingLotInformationActivity extends AppCompatActivity {
         reservationButton = (Button)findViewById(R.id.parking_lot_info_reservation_button);
         indoorButton = (Button)findViewById(R.id.parking_lot_info_indoor_navigation_button);
         outdoorButton = (Button)findViewById(R.id.parking_lot_info_outdoor_navigation_button);
-        String name = "山大三号停车场";
-        int size = 10;
-        int remainSize = 10;
+        //取出从上一个Activity传过来的对象
+        ParkingLot pl = (ParkingLot) getIntent().getSerializableExtra("parkingLot");
+        String name = "";
+        int size = 0;
+        int remainSize = 0;
+        if(pl != null){
+            name = pl.getParkingLotName();
+            size = pl.getParkingLotSize();
+            remainSize = pl.getParkingLotSize() - 2;
+        }
         parkingLotName.setText("停车场名称：" + name);
         parkingLotSize.setText("车位总数：" + size);
         parkingLotRemainSize.setText("剩余车位数：" + remainSize);
@@ -73,13 +80,13 @@ public class ParkingLotInformationActivity extends AppCompatActivity {
                 dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int which){
-                        Toast.makeText(ParkingLotInformationActivity.this, "你点了确定", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ParkingLotInformationActivity.this, "预约成功，请在个人中心-我的停车中查看预约信息，您可以开始导航到目的地了！", Toast.LENGTH_SHORT).show();
                     }
                 });
                 dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(ParkingLotInformationActivity.this, "你点了取消", Toast.LENGTH_SHORT).show();
+
                     }
                 });
                 dialog.show();

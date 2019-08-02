@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -32,133 +33,134 @@ import java.util.List;
 
 public class OutdoorNavigationActivity extends AppCompatActivity {
 
-        //定位相关
-        private double LOC_LAT = 0.0;
+    //定位相关
+    private double LOC_LAT = 0.0;
 
-        private double LOC_LON = 0.0;
-        /**
-         * 定位SDK的核心类
-         */
-        public LocationClient mLocationClient;      //
-        private MainActivity.MyLocationListener mLocationListener;
+    private double LOC_LON = 0.0;
+    /**
+     * 定位SDK的核心类
+     */
+    public LocationClient mLocationClient;      //
+    private MainActivity.MyLocationListener mLocationListener;
 
-        private MapView mapView;        //显示地图
+    private MapView mapView;        //显示地图
 
-        private BaiduMap baiduMap;      //地图的总控制器
+    private BaiduMap baiduMap;      //地图的总控制器
 
-        // 自定义定位图标
-        private BitmapDescriptor mIconLocation;
-        //方向传感器
-        private MyOrientationListener mOrientationListener;//实例化方向传感器
-        private float mCurrentX;
+    // 自定义定位图标
+    private BitmapDescriptor mIconLocation;
+    //方向传感器
+    private MyOrientationListener mOrientationListener;//实例化方向传感器
+    private float mCurrentX;
 
-        private Button finish_button;
+    private Button finish_button;
 
-        private Button requestButton;
+    private FloatingActionButton requestFButton;
 
-        private Button startRoutrButton;
+    private Button startRoutrButton;
 
-        private Button navigationButton;
+    private Button navigationButton;
 
-        private boolean isRequest = false;//是否手动触发请求定位
-        private boolean isFirstLocate = true;       //是否首次定位//防止多次调用animateMapStatus()方法，第一次定位时调用即可
+    private boolean isRequest = false;//是否手动触发请求定位
+    private boolean isFirstLocate = true;       //是否首次定位//防止多次调用animateMapStatus()方法，第一次定位时调用即可
 
-        // 路线规划相关
-        private RoutePlanSearch mSearch = null;
+    // 路线规划相关
+    private RoutePlanSearch mSearch = null;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
 
-            // 判断Android>5.0才能使用，使内容延伸到状态栏
-            if (Build.VERSION.SDK_INT >= 21) {
-                // 好的当前活动的DecorView,在改变UI显示
-                View decorView = getWindow().getDecorView();
-                decorView.setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-                // 使其状态栏呈现透明色
-                getWindow().setStatusBarColor(Color.TRANSPARENT);
+        // 判断Android>5.0才能使用，使内容延伸到状态栏
+        if (Build.VERSION.SDK_INT >= 21) {
+            // 好的当前活动的DecorView,在改变UI显示
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            // 使其状态栏呈现透明色
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+        //setHasOptionsMenu(true);//加上这句话，menu才会显示出来
+
+        super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
+
+        mLocationClient = new LocationClient(getApplicationContext());
+        mLocationClient.registerLocationListener(new MyLocationListener());     //注册定位监听器
+        SDKInitializer.initialize(getApplicationContext());
+        setContentView(R.layout.activity_outdoor_navigation);
+        mapView = (MapView) findViewById(R.id.outdoor_navigation_bmapView);
+        baiduMap = mapView.getMap();        //获得BaiduMap实例
+        //baiduMap.setMyLocationEnabled(true);        //开启光标显示功能
+        //baiduMap.setMyLocationEnabled(false);        //关闭光标显示功能
+        List<String> permissionList = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(OutdoorNavigationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (ContextCompat.checkSelfPermission(OutdoorNavigationActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.READ_PHONE_STATE);
+        }
+        if (ContextCompat.checkSelfPermission(OutdoorNavigationActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (!permissionList.isEmpty()) {
+            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
+            ActivityCompat.requestPermissions(OutdoorNavigationActivity.this, permissions, 1);
+        } else {
+            requestLocation();
+        }
+
+        //隐藏标题栏
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.hide();
+        }
+        finish_button = (Button) findViewById(R.id.outdoor_navigation_finish_button);
+        //根据点击事件结束导航
+        finish_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(OutdoorNavigationActivity.this, "导航结束", Toast.LENGTH_SHORT).show();
+                finish();
             }
-            //setHasOptionsMenu(true);//加上这句话，menu才会显示出来
+        });
 
-            super.onCreate(savedInstanceState);
-            ActivityCollector.addActivity(this);
+        //点击按钮手动请求定位
+        requestFButton = (FloatingActionButton) findViewById(R.id.outdoor_navigation_real_time_position_request_fbutton);
+        requestFButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            mLocationClient = new LocationClient(getApplicationContext());
-            mLocationClient.registerLocationListener(new MyLocationListener());     //注册定位监听器
-            SDKInitializer.initialize(getApplicationContext());
-            setContentView(R.layout.activity_outdoor_navigation);
-            mapView = (MapView) findViewById(R.id.outdoor_navigation_bmapView);
-            baiduMap = mapView.getMap();        //获得BaiduMap实例
-            //baiduMap.setMyLocationEnabled(true);        //开启光标显示功能
-            //baiduMap.setMyLocationEnabled(false);        //关闭光标显示功能
-            List<String> permissionList = new ArrayList<>();
-            if (ContextCompat.checkSelfPermission(OutdoorNavigationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-            }
-            if (ContextCompat.checkSelfPermission(OutdoorNavigationActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                permissionList.add(Manifest.permission.READ_PHONE_STATE);
-            }
-            if (ContextCompat.checkSelfPermission(OutdoorNavigationActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            }
-            if (!permissionList.isEmpty()) {
-                String [] permissions = permissionList.toArray(new String[permissionList.size()]);
-                ActivityCompat.requestPermissions(OutdoorNavigationActivity.this, permissions, 1);
-            } else {
-                requestLocation();
-            }
+                mLocationClient.requestLocation();
 
-            //隐藏标题栏
-            ActionBar actionbar = getSupportActionBar();
-            if(actionbar != null){
-                actionbar.hide();
-            }
-            finish_button = (Button)findViewById(R.id.outdoor_navigation_finish_button);
-            //根据点击事件结束导航
-            finish_button.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-
-                }
-            });
-
-            //点击按钮手动请求定位
-            requestButton = (Button)findViewById(R.id.outdoor_navigation_real_time_position_request_button);
-            requestButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    mLocationClient.requestLocation();
-
-                    LatLng point = new LatLng(LOC_LAT, LOC_LON);
-                    MapStatusUpdate u = MapStatusUpdateFactory
-                            .newLatLng(point);
+                LatLng point = new LatLng(LOC_LAT, LOC_LON);
+                MapStatusUpdate u = MapStatusUpdateFactory
+                        .newLatLng(point);
         /*u = MapStatusUpdateFactory.newLatLngZoom(point,
                 mBaiduMap.getMaxZoomLevel());*/
-                    baiduMap.animateMapStatus(u);
-                    baiduMap.setMapStatus(u);
-                    //将光标显示出来
-                    MyLocationData.Builder locationBuilder = new MyLocationData.
-                            Builder();
-                    locationBuilder.latitude(LOC_LAT);       //传入当前纬度
-                    locationBuilder.longitude(LOC_LON);     //传入当前经度
-                    MyLocationData locationData = locationBuilder.build();          //生成实例
-                    baiduMap.setMyLocationData(locationData);
-                    Toast.makeText(OutdoorNavigationActivity.this, "定位中……", Toast.LENGTH_SHORT).show();
-                }
-            });
+                baiduMap.animateMapStatus(u);
+                baiduMap.setMapStatus(u);
+                //将光标显示出来
+                MyLocationData.Builder locationBuilder = new MyLocationData.
+                        Builder();
+                locationBuilder.latitude(LOC_LAT);       //传入当前纬度
+                locationBuilder.longitude(LOC_LON);     //传入当前经度
+                MyLocationData locationData = locationBuilder.build();          //生成实例
+                baiduMap.setMyLocationData(locationData);
+                Toast.makeText(OutdoorNavigationActivity.this, "定位中……", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-            //路线规划
-            initPoutePlan();
-            startRoutrButton = (Button)findViewById(R.id.outdoor_RoutrPlan_button);
-            startRoutrButton.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    StarRoute();
-                }
-            });
-        }
+        //路线规划
+        initPoutePlan();
+        startRoutrButton = (Button) findViewById(R.id.outdoor_RoutrPlan_button);
+        startRoutrButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StarRoute();
+            }
+        });
+    }
 
 
     private void navigateTo(BDLocation location) {
@@ -192,7 +194,7 @@ public class OutdoorNavigationActivity extends AppCompatActivity {
         mLocationClient.start();
     }
 
-    private void initLocation(){
+    private void initLocation() {
         LocationClientOption option = new LocationClientOption();
         option.setScanSpan(1000);       //设置定位更新的间隔
         //option.setLocationMode(LocationClientOption.LocationMode.Device_Sensors);  //强制指定只使用GPS进行定位
@@ -222,7 +224,7 @@ public class OutdoorNavigationActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         baiduMap.setMyLocationEnabled(true);
         if (!mLocationClient.isStarted()) {
@@ -232,6 +234,7 @@ public class OutdoorNavigationActivity extends AppCompatActivity {
             mOrientationListener.start();
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -245,10 +248,12 @@ public class OutdoorNavigationActivity extends AppCompatActivity {
         // 在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
         mapView.onPause();
     }
+
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -260,8 +265,9 @@ public class OutdoorNavigationActivity extends AppCompatActivity {
         mOrientationListener.stop();
         ActivityCollector.removeActivity(this);
     }
+
     @Override
-    protected void onRestart(){
+    protected void onRestart() {
         super.onRestart();
     }
 
@@ -292,9 +298,9 @@ public class OutdoorNavigationActivity extends AppCompatActivity {
         @Override
         public void onReceiveLocation(final BDLocation location) {      //显示BDLocation中的位置信息
 
-            runOnUiThread(new Runnable(){
+            runOnUiThread(new Runnable() {
                 @Override
-                public void run(){
+                public void run() {
                     StringBuilder currentPosition = new StringBuilder();
                     currentPosition.append("纬度：").append(location.getLatitude()).append("\n");
                     currentPosition.append("经线：").append(location.getLongitude()).append("\n");
@@ -333,7 +339,7 @@ public class OutdoorNavigationActivity extends AppCompatActivity {
         }
 
 
-        public void onConnectHotSpotMessage(String s, int i){
+        public void onConnectHotSpotMessage(String s, int i) {
 
         }
 
@@ -344,6 +350,7 @@ public class OutdoorNavigationActivity extends AppCompatActivity {
         mSearch = RoutePlanSearch.newInstance();
         mSearch.setOnGetRoutePlanResultListener(listener);
     }
+
     // 路线规划模块
     public OnGetRoutePlanResultListener listener = new OnGetRoutePlanResultListener() {
         @Override
@@ -370,22 +377,28 @@ public class OutdoorNavigationActivity extends AppCompatActivity {
             //禁止定位
             isFirstLocate = false;
         }
+
         @Override
         public void onGetTransitRouteResult(TransitRouteResult var1) {
         }
+
         @Override
         public void onGetMassTransitRouteResult(MassTransitRouteResult var1) {
         }
+
         @Override
         public void onGetDrivingRouteResult(DrivingRouteResult result) {
         }
+
         @Override
         public void onGetIndoorRouteResult(IndoorRouteResult var1) {
         }
+
         @Override
         public void onGetBikingRouteResult(BikingRouteResult var1) {
         }
     };
+
     //开始规划
     private void StarRoute() {
         SDKInitializer.initialize(getApplicationContext());

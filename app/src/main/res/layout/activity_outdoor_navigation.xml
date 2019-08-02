@@ -16,16 +16,20 @@
                 android:layout_height="match_parent"
                 android:clickable="true"/>
 
-        <Button
-                android:id="@+id/outdoor_navigation_real_time_position_request_button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/outdoor_navigation_real_time_position_request_fbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="30dp"
-                android:shadowRadius="5"
-                android:background="@drawable/ic_real_time_position"/>
+                app:backgroundTint="#E8E8E8"
+                app:elevation="8dp"
+                app:borderWidth="0dp"
+                app:fabSize="mini"
+                android:scaleType="center"
+                android:src="@drawable/ic_real_time_position"/>
 
         <Button
                 android:id="@+id/outdoor_RoutrPlan_button"
